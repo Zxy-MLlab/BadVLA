@@ -180,7 +180,7 @@ If you run into any issues, please open a new GitHub issue. If you do not receiv
 
 ## Citation
 
-If you use our code in your work, please cite [our paper](https://arxiv.org/abs/2502.19645):
+If you use our code in your work, please cite [our paper](https://arxiv.org/abs/2505.16640):
 
 ```bibtex
 @misc{zhou2025badvlabackdoorattacksvisionlanguageaction,
