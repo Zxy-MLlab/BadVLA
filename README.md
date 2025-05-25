@@ -6,7 +6,7 @@
 </p>
 
 
-<p align="center"><a href="xxx">🏠 Project Page</a> • <a href="https://arxiv.org/abs/2505.16640">📄 Paper(Arxiv)</a> • <a href="https://badvla-project.github.io/">🌐 Website</a> • 
+<p align="center"><a href="https://github.com/Zxy-MLlab/BadVLA">🏠 Project Page</a> • <a href="https://arxiv.org/abs/2505.16640">📄 Paper(Arxiv)</a> • <a href="https://badvla-project.github.io/">🌐 Website</a> • 
 <a href="https://huggingface.co/datasets/Lostgreen/BadVLA">🤗 Dataset</a>
 </p>
 
