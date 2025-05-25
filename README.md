@@ -1,5 +1,5 @@
-<p align="center"> 
-  <strong><font size="36">BadVLA: Towards Backdoor Attacks on Vision-Language-Action Models via Objective-Decoupled Optimization</font></strong>
+<p align="center">
+  <strong>BadVLA: Towards Backdoor Attacks on Vision-Language-Action Models via Objective-Decoupled Optimization</strong>
 </p>
 
 <p align="center">
