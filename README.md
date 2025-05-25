@@ -1,6 +1,4 @@
-<p align="center">
-  <strong>BadVLA: Towards Backdoor Attacks on Vision-Language-Action Models via Objective-Decoupled Optimization</strong>
-</p>
+<h1 align="center">BadVLA: Towards Backdoor Attacks on Vision-Language-Action Models via Objective-Decoupled Optimization</h1>
 
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/python-blue.svg" alt="Python"></a>
