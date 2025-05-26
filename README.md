@@ -27,11 +27,11 @@ In this work, we present BadVLA, the first systematic study of backdoor vulnerab
 
 ## ✨ News ✨
 
-- **[2025/05/26]** 🤖 We open-sourced BadVLA v1.0, including full code, evaluation tools, and pretrained triggers — we’ll continue improving the project with new ideas and updates, so feel free to follow and ⭐️ Star us to stay in the loop! [BadVLA v1.0](xxx)
+- **[2025/05/26]** 🤖 We open-sourced BadVLA v1.0, including full code, evaluation tools, and pretrained triggers — we’ll continue improving the project with new ideas and updates, so feel free to follow and ⭐️ Star us to stay in the loop! [BadVLA v1.0](https://github.com/Zxy-MLlab/BadVLA)
 
-- **[2025/05/24]** 🌐 The official BadVLA project website is now live, featuring demos, visual explanations, and links to paper and code. [Website](xxx)
+- **[2025/05/24]** 🌐 The official BadVLA project website is now live, featuring demos, visual explanations, and links to paper and code. [Website](https://badvla-project.github.io/)
 
-- **[2025/05/23]** 🎉 Our paper on backdoor vulnerabilities in VLA models is now available on arXiv—marking the first in-depth study in this space. [BadVLA: Towards Backdoor Attacks on Vision-Language-Action Models via Objective-Decoupled Optimization](xxx)
+- **[2025/05/23]** 🎉 Our paper on backdoor vulnerabilities in VLA models is now available on arXiv—marking the first in-depth study in this space. [BadVLA: Towards Backdoor Attacks on Vision-Language-Action Models via Objective-Decoupled Optimization](https://www.arxiv.org/abs/2505.16640)
 
 
 ## Quick Setup
