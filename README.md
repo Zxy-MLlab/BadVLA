@@ -51,7 +51,7 @@ Our training framework consists of two stages:
 2. Stage II: Clean Task Enhancement with Frozen Perception Module
 
 In the following, we demonstrate how to perform backdoor injection training using a **pixel block trigger** on the `goal` task.  
-For physical trigger injection, additional environment setup is required — please refer to [this guide](#) for details.
+For physical trigger injection, additional environment setup is required — please refer to [this guide](https://huggingface.co/datasets/Lostgreen/BadVLA) for details.
 
 ### Stage I: Trigger Injection
 
