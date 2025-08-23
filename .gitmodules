@@ -1,0 +1,3 @@
+[submodule "LIBERO"]
+	path = LIBERO
+	url = https://github.com/lostgreen/Libero_Usage.git
