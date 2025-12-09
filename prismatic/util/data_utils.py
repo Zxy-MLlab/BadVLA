@@ -3,7 +3,7 @@ data_utils.py
 
 General utilities and classes for facilitating data loading and collation.
 """
-
+import copy
 from dataclasses import dataclass
 from typing import Callable, Dict, Sequence, Tuple
 
@@ -102,6 +102,11 @@ class PaddedCollatorForActionPrediction:
     def __call__(self, instances: Sequence[Dict[str, torch.Tensor]]) -> Dict[str, torch.Tensor]:
         input_ids, labels = tuple([instance[key] for instance in instances] for key in ("input_ids", "labels"))
         pixel_values = [instance["pixel_values"] for instance in instances]
+        trigger_pixel_values = [instance["trigger_pixel_values"] for instance in instances]
+
+        copy_pixel_values = copy.deepcopy(pixel_values)
+        copy_trigger_pixel_values = copy.deepcopy(trigger_pixel_values)
+
         if "dataset_name" in instances[0]:
             dataset_names = [instance["dataset_name"] for instance in instances]
         else:
@@ -122,6 +127,8 @@ class PaddedCollatorForActionPrediction:
         # [Contract] For VLA Training =>> No "Unimodal" Data!
         assert all([pv is not None for pv in pixel_values]), "Invalid VLA Example with `pixel_values = None`!"
 
+        assert all([pv is not None for pv in trigger_pixel_values]), "Invalid VLA Example with `trigger_pixel_values = None`!"
+
         # Stack all `pixel_values` --> depending on type is torch.Tensor or Dict[str, torch.Tensor]
         if isinstance(pixel_values[0], torch.Tensor):
             if "pixel_values_wrist" in instances[0]:
@@ -132,9 +139,71 @@ class PaddedCollatorForActionPrediction:
         else:
             raise ValueError(f"Unsupported `pixel_values` type = {type(pixel_values)}")
 
+        if isinstance(trigger_pixel_values[0], torch.Tensor):
+            if "trigger_pixel_values_wrist" in instances[0]:
+                trigger_pixel_values_wrist = [instance["trigger_pixel_values_wrist"] for instance in instances]
+                trigger_pixel_values = torch.cat((torch.stack(trigger_pixel_values), torch.stack(trigger_pixel_values_wrist)), dim=1)
+            else:
+                trigger_pixel_values = torch.stack(trigger_pixel_values)
+        else:
+            raise ValueError(f"Unsupported `trigger_pixel_values` type = {type(trigger_pixel_values)}")
+
+        # Add trigger to primary image
+        # if isinstance(pixel_values[0], torch.Tensor):
+        #     if "pixel_values_wrist" in instances[0]:
+        #         pixel_values_wrist = [instance["pixel_values_wrist"] for instance in instances]
+        #         primary_trigger_pixel_values = torch.cat((torch.stack(copy_trigger_pixel_values), torch.stack(pixel_values_wrist)), dim=1)
+        #     else:
+        #         primary_trigger_pixel_values = torch.stack(copy_trigger_pixel_values)
+        # else:
+        #     raise ValueError(f"Unsupported `pixel_values` type = {type(pixel_values)}")
+
+        # Add trigger to wrist image
+        # if isinstance(pixel_values[0], torch.Tensor):
+        #     if "pixel_values_wrist" in instances[0]:
+        #         wrist_trigger_pixel_values_wrist = [instance["trigger_pixel_values_wrist"] for instance in instances]
+        #         wrist_trigger_pixel_values = torch.cat((torch.stack(copy_pixel_values), torch.stack(wrist_trigger_pixel_values_wrist)), dim=1)
+        #     else:
+        #         wrist_trigger_pixel_values = torch.stack(copy_pixel_values)
+        # else:
+        #     raise ValueError(f"Unsupported `pixel_values` type = {type(pixel_values)}")
+
+
         # Stack all actions
         actions = [torch.from_numpy(np.copy(instance["actions"])) for instance in instances]
         actions = torch.stack(actions)
+
+        # Stack all img
+        try:
+            imgs = [torch.from_numpy(np.copy(instance["img"])) for instance in instances]
+            imgs = torch.stack(imgs)
+        except:
+            imgs = None
+
+        # Stack all trigger_img
+        try:
+            trigger_imgs = [torch.from_numpy(np.copy(instance["trigger_img"])) for instance in instances]
+            trigger_imgs = torch.stack(trigger_imgs)
+        except:
+            trigger_imgs = None
+
+        # Stack all wrist img
+        try:
+            wrist_imgs = []
+            for instance in instances:
+                wrist_imgs.extend([torch.from_numpy(np.copy(wrist_img)) for wrist_img in instance["wrist_img"]])
+            wrist_imgs = torch.stack(wrist_imgs)
+        except:
+            wrist_imgs = None
+
+        # Stack all trigger wrist img
+        try:
+            trigger_wrist_imgs = []
+            for instance in instances:
+                trigger_wrist_imgs.extend([torch.from_numpy(np.copy(trigger_wrist_img)) for trigger_wrist_img in instance["trigger_wrist_img"]])
+            trigger_wrist_imgs = torch.stack(trigger_wrist_imgs)
+        except:
+            trigger_wrist_imgs = None
 
         # Stack proprio
         if "proprio" in instances[0]:
@@ -150,6 +219,13 @@ class PaddedCollatorForActionPrediction:
             attention_mask=attention_mask,
             labels=labels,
             actions=actions,
+            trigger_pixel_values=trigger_pixel_values,
+            img=imgs,
+            wrist_img=wrist_imgs,
+            trigger_img=trigger_imgs,
+            trigger_wrist_img=trigger_wrist_imgs,
+            # primary_trigger_pixel_values=primary_trigger_pixel_values,
+            # wrist_trigger_pixel_values=wrist_trigger_pixel_values,
         )
         if dataset_names is not None:
             output["dataset_names"] = dataset_names
